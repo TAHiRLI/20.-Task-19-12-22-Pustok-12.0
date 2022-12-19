@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pustok.Models
@@ -7,8 +8,10 @@ namespace Pustok.Models
     {
 
         public int Id { get; set; }
-        public int BookId { get; set; }
+        public int? BookId { get; set; }
+        [MaxLength(25)]
         public int OrderId { get; set; }
+        public string Name { get; set; }
         public int Count { get; set; }
 
         [Column(TypeName = "money")]
@@ -21,6 +24,6 @@ namespace Pustok.Models
         public decimal ItemDiscountPercent { get; set; }
 
         public Order Order { get; set; }
-        public Book Book { get; set; }
+        public Book? Book { get; set; }
     }
 }

@@ -10262,11 +10262,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Hp\\Desktop\\CodeAcadem\\BackEnd\\Tasks\\19. Tak 15-12-22 Pustok v11\\PustokApp\\Pustok\\Pustok.csproj",
+      "projectUniqueName": "C:\\Users\\Hp\\Desktop\\CodeAcadem\\BackEnd\\Tasks\\20. Task 19-12-22 Pustok v12\\PustokApp\\Pustok\\Pustok.csproj",
       "projectName": "Pustok",
-      "projectPath": "C:\\Users\\Hp\\Desktop\\CodeAcadem\\BackEnd\\Tasks\\19. Tak 15-12-22 Pustok v11\\PustokApp\\Pustok\\Pustok.csproj",
+      "projectPath": "C:\\Users\\Hp\\Desktop\\CodeAcadem\\BackEnd\\Tasks\\20. Task 19-12-22 Pustok v12\\PustokApp\\Pustok\\Pustok.csproj",
       "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Hp\\Desktop\\CodeAcadem\\BackEnd\\Tasks\\19. Tak 15-12-22 Pustok v11\\PustokApp\\Pustok\\obj\\",
+      "outputPath": "C:\\Users\\Hp\\Desktop\\CodeAcadem\\BackEnd\\Tasks\\20. Task 19-12-22 Pustok v12\\PustokApp\\Pustok\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",

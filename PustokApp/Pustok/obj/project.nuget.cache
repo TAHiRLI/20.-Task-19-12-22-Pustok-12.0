@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0uoUBMaxFKaxFXGX/2ER/hVdgKyXCM7YDRQiuMzGgj0DE5GxgmsMgeYo2zPCfaEiWysaAa2g/IlUtbSxAlOdNQ==",
+  "dgSpecHash": "WBncfUSiqc1Cp45RJHE/HCmoXKxqyBqEZ0f1gfucr4RgtKuk3EXXQGVTaejzx1qOdE2fNcmKnntqvTHkxMih4Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Hp\\Desktop\\CodeAcadem\\BackEnd\\Tasks\\19. Tak 15-12-22 Pustok v11\\PustokApp\\Pustok\\Pustok.csproj",
+  "projectFilePath": "C:\\Users\\Hp\\Desktop\\CodeAcadem\\BackEnd\\Tasks\\20. Task 19-12-22 Pustok v12\\PustokApp\\Pustok\\Pustok.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Hp\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Hp\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
