@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using NuGet.Protocol;
 using Pustok.DAL;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Pustok.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController :BaseController
     {
         private readonly PustokDbContext _context;
         private readonly UserManager<AppUser> _userManager;
@@ -184,7 +185,7 @@ namespace Pustok.Controllers
 
 
             ProfileVm.MemberEditViewModel = memberEditVm;
-
+            ProfileVm.Orders = _getOrders();
 
 
             return View(ProfileVm);
@@ -215,6 +216,7 @@ namespace Pustok.Controllers
             if (!ModelState.IsValid)
             {
                 ProfileVm.MemberEditViewModel = memberEditVm;
+                ProfileVm.Orders = _getOrders();
                 return View(ProfileVm);
             }
 
@@ -261,7 +263,20 @@ namespace Pustok.Controllers
             return RedirectToAction("Index", "home");
         }
 
+        private List<Order> _getOrders()
+        {
+            List<Order> orders = _context.Orders
+                    .Include(x=> x.AppUser)
+                    .Include(x=> x.OrderItems)
+                    .ThenInclude(x=> x.Book)
+                    .Where(x=> x.AppUserId == UserId).ToList();
+
+            return orders;
+        }
+
 
 
     }
+
+
 }

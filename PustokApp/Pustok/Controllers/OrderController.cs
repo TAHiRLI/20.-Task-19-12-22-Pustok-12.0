@@ -25,6 +25,10 @@ namespace Pustok.Controllers
             _context = context;
             _userManager = userManager;
         }
+        public IActionResult Details(int id)
+        {
+            return View();
+        }
         public async Task<IActionResult> Checkout()
         {
             CheckoutViewModel model = await _getCheckoutVM();
@@ -123,7 +127,6 @@ namespace Pustok.Controllers
 
             return basketList;
         }
-
         private List<BasketItem> _mapBasketItems(List<BasketCookieViewModel> cookieItems)
         {
             List<BasketItem> basketItems = new List<BasketItem>();
