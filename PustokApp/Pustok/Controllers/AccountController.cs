@@ -201,7 +201,8 @@ namespace Pustok.Controllers
                 return RedirectToAction("login");
             }
             ProfileViewModel ProfileVm = new ProfileViewModel();
-         
+            ProfileVm.MemberEditViewModel = memberEditVm;
+            ProfileVm.Orders = _getOrders();
 
 
             if (memberEditVm.Fullname != appUser.Fullname)
@@ -215,8 +216,7 @@ namespace Pustok.Controllers
 
             if (!ModelState.IsValid)
             {
-                ProfileVm.MemberEditViewModel = memberEditVm;
-                ProfileVm.Orders = _getOrders();
+                
                 return View(ProfileVm);
             }
 
@@ -234,7 +234,7 @@ namespace Pustok.Controllers
                         {
                             ModelState.AddModelError("", error.Description);
                         }
-                        return View(memberEditVm);
+                        return View(ProfileVm);
                     }
                 }
 

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using NuGet.Common;
 using Pustok.DAL;
+using Pustok.Enums;
 using Pustok.Models;
 using Pustok.ViewModels;
 using System;
@@ -27,7 +29,34 @@ namespace Pustok.Controllers
         }
         public IActionResult Details(int id)
         {
-            return View();
+            var model = _context.Orders
+                            .Include(x => x.OrderItems)
+                            .ThenInclude(x => x.Book).ThenInclude(x => x.Genre)
+                            .Include(x => x.OrderItems)
+                            .ThenInclude(x => x.Book).ThenInclude(x=> x.Author)
+                              .Include(x => x.OrderItems)
+                            .ThenInclude(x => x.Book).ThenInclude(x => x.BookImages)
+                            .FirstOrDefault(x => x.Id == id);
+                            
+                        
+            return View(model);
+        }
+        [Authorize(Roles ="Member")]
+        public IActionResult Cancel(int id)
+        {
+            var order = _context.Orders.FirstOrDefault(x => x.Id == id);
+            if (order == null)
+                return NotFound();
+
+            if (order.OrderStatus == OrderStatus.Pending)
+                order.OrderStatus = OrderStatus.Cancelled;
+            else
+            {
+                // bir mesaj verilmelidi 
+                return RedirectToAction("details", new { id = id });
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Profile", "account");
         }
         public async Task<IActionResult> Checkout()
         {

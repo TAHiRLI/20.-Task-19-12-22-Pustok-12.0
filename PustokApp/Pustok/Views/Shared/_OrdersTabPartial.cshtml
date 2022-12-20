@@ -29,7 +29,7 @@
                             <td>@order.CreatedAt?.ToString(" dd MMMM yyyy")</td>
                             <td>@order.OrderStatus</td>
                             <td>$@order.OrderItems.Sum(x=> x.Count *(x.Book.SalePrice*(100-x.Book.DiscountPercent)/100)).ToString("0.00")</td>
-                            <td><a asp-action="details" asp-controller="Oder" asp-route-id="@order.Id" class="btn">View</a></td>
+                            <td><a asp-action="details" asp-controller="Order" asp-route-id="@order.Id" class="btn">View</a></td>
 
                         </tr>
                     }
