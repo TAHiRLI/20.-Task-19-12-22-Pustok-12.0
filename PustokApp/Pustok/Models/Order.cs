@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pustok.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -33,7 +34,7 @@ namespace Pustok.Models
         public string ZipCode { get; set; }
         [MaxLength(500)]
         public string Note { get; set; }
-
+        public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;
 
 
         public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
