@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Newtonsoft.Json;
 using NuGet.Protocol;
 using Pustok.DAL;
@@ -172,38 +173,50 @@ namespace Pustok.Controllers
         public async Task<IActionResult> Profile()
         {
             AppUser appUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            if (appUser == null) return NotFound();
+
+            ProfileViewModel ProfileVm = new ProfileViewModel();
+
             MemberEditViewModel memberEditVm = new MemberEditViewModel();
             memberEditVm.Fullname = appUser.Fullname;
             memberEditVm.UserName = appUser.UserName;
             memberEditVm.Email = appUser.Email;
 
-            return View(memberEditVm);
-        }
+
+            ProfileVm.MemberEditViewModel = memberEditVm;
+
+
+
+            return View(ProfileVm);
+        } 
         [HttpPost]
         [Authorize(Roles = "Member")]
-
         public async Task<IActionResult> Profile(MemberEditViewModel memberEditVm)
         {
             AppUser appUser = await _userManager.FindByNameAsync(User.Identity.Name);
-            if (User == null)
+            if (appUser == null)
             {
                 await _signInManager.SignOutAsync();
                 return RedirectToAction("login");
             }
-            var transaction = _context.Database.BeginTransaction();
+            ProfileViewModel ProfileVm = new ProfileViewModel();
+         
 
 
-            if (memberEditVm.Fullname.ToUpper() != appUser.Fullname.ToUpper())
+            if (memberEditVm.Fullname != appUser.Fullname)
                 appUser.Fullname = memberEditVm.Fullname;
 
-            if (memberEditVm.Email.ToUpper() != appUser.NormalizedEmail && _context.AppUsers.Any(x => x.NormalizedEmail == memberEditVm.Email.ToUpper()))
+            if (memberEditVm.Email != appUser.Email && _context.AppUsers.Any(x => x.Email == memberEditVm.Email))
                 ModelState.AddModelError("Email", "This email already exists");
 
-            if (memberEditVm.UserName.ToUpper() != appUser.NormalizedUserName && _context.AppUsers.Any(x => x.NormalizedUserName == memberEditVm.UserName.ToUpper()))
+            if (memberEditVm.UserName != appUser.UserName && _context.AppUsers.Any(x => x.UserName == memberEditVm.UserName))
                 ModelState.AddModelError("Username", "This Username already exists");
 
             if (!ModelState.IsValid)
-                return View(memberEditVm);
+            {
+                ProfileVm.MemberEditViewModel = memberEditVm;
+                return View(ProfileVm);
+            }
 
             var isUpdated = new IdentityResult();
             if (memberEditVm.CurrentPassword != null || memberEditVm.NewPassword != null)
@@ -228,14 +241,16 @@ namespace Pustok.Controllers
 
             appUser.Email = memberEditVm.Email;
             appUser.UserName = memberEditVm.UserName;
+            appUser.Fullname = memberEditVm.Fullname;
 
             var result = await _userManager.UpdateAsync(appUser);
 
 
-            if (result.Succeeded && isUpdated.Succeeded)
-                transaction.Commit();
+            _context.SaveChanges();
+            
+        
 
-            await _signInManager.SignInAsync(appUser, false);
+            await _signInManager.SignInAsync(appUser, true);
 
             return RedirectToAction("index", "home");
         }
